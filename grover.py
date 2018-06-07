@@ -204,6 +204,10 @@ def Oracle(Qubits, aux_bit, bitstring, p=None):
 
 
 def Grover(Qubits, bitstring, p=None, num_iters=1):
+    """ Use case: Finding the state of an arbituary bitstring in an n-qubit state
+
+    In general, we would pass in an arbitrary oracle.
+    """
     assert len(Qubits) == len(bitstring)
 
     if p is None: p = Program().defgate("T_inv", T_inv_mat)
@@ -239,6 +243,17 @@ def Grover(Qubits, bitstring, p=None, num_iters=1):
 
 
 
+
+##########################################################
+##########################################################
+##########################################################
+
+# Testing code below
+
+##########################################################
+##########################################################
+##########################################################
+
 def testGrover(n, bitstring, num_iters=-1, measure=True, printOut=True):
     if num_iters == -1: num_iters = round(math.pi / 4 * math.sqrt(2**n))
 
@@ -269,8 +284,12 @@ def testGrover(n, bitstring, num_iters=-1, measure=True, printOut=True):
 
     return p
 
+
+
+
 ##########################################################
-""" Testing AND circuit
+
+""" Testing AND circuit below
 
 We should see: a) auxiliary qubit always in state |0>
                b) all states in equal probability
@@ -373,6 +392,6 @@ p = testGrover(3, '010')#, measure=False)
 # measures all qubits
 # this was resolved here: https://github.com/rigetticomputing/pyquil/issues/223
 # so latest version we can simply call p.measure_all()
-#*zip(p.get_qubits(), p.get_qubits()))
+#p.measure_all(*zip(p.get_qubits(), p.get_qubits()))
 
 
